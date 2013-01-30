@@ -91,7 +91,7 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
-	public final void testExample1() throws IOException {
+	public final void testExample01() throws IOException {
 		assertRejected(S, ":((");
 	}
 
@@ -106,7 +106,7 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
-	public final void testExample2() throws IOException {
+	public final void testExample02() throws IOException {
 		assertAccepted(S, "i am sick today (:()");
 	}
 
@@ -121,7 +121,7 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
-	public final void testExample3() throws IOException {
+	public final void testExample03() throws IOException {
 		assertAccepted(S, "(:)");
 	}
 
@@ -136,7 +136,7 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
-	public final void testExample4() throws IOException {
+	public final void testExample04() throws IOException {
 		assertAccepted(S, "hacker cup: started :):)");
 	}
 
@@ -151,8 +151,442 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
-	public final void testExample5() throws IOException {
+	public final void testExample05() throws IOException {
 		assertRejected(S, ")(");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(((a)):()a(()(((:))a((:)():(((()()a)))(:a(::)(a)))(a)((a::():(a)():)a(a(a(:aa(:()(a(((((()))))))))"}
+	 * is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample06() throws IOException {
+		assertRejected(S,
+				"(((a)):()a(()(((:))a((:)():(((()()a)))(:a(::)(a)))(a)((a::():(a)():)a(a(a(:aa(:()(a(((((()))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "():)((()():(:())))::aa((((:(((:)))::a:(:))()a)):(a):::((()a((a(aa(():))(():())((::a)a)):)()"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample07() throws IOException {
+		assertAccepted(S, "():)((()():(:())))::aa((((:(((:)))::a:(:))()a)):(a):::((()a((a(aa(():))(():())((::a)a)):)()");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code ":(a):(:)aa)a(:()::():))a:aaa:)(:)((()()))a()(((()(:)))(:(aa:()())())a((a)a:(:()))(a((():)))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample08() throws IOException {
+		assertAccepted(S, ":(a):(:)aa)a(:()::():))a:aaa:)(:)((()()))a()(((()(:)))(:(aa:()())())a((a)a:(:()))(a((():)))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code ":a:)(:))()(()()a)aaa::a()()a:()()a::)((()(a(a))))try implementing sleep sort if you are stuck:(:)a)"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample09() throws IOException {
+		assertAccepted(S,
+				":a:)(:))()(()()a)aaa::a()()a:()()a::)((()(a(a))))try implementing sleep sort if you are stuck:(:)a)");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(a())(::)(a))():(((a(()(:))a(:)))(:(:(:((():)(a))(:))(a)():(:(()aa):)(a((())a)a((a):)()(:("}
+	 * is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample10() throws IOException {
+		assertRejected(S, "(a())(::)(a))():(((a(()(:))a(:)))(:(:(:((():)(a))(:))(a)():(:(()aa):)(a((())a)a((a):)()(:(");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(::a((a)a:()):):a)aa:)a(:::))(a())aa(a():))(:)a)((():)(:a:)a))):a(a)((:()(()())a))()a((()a))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample11() throws IOException {
+		assertAccepted(S,
+				"(::a((a)a:()):):a)aa:)a(:::))(a())aa(a():))(:)a)((():)(:a:)a))):a(a)((:()(()())a))()a((()a))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "()(((a)((aa)))a)a()(a)(aa:a)()(((:())aa)):()():():a:(a)(a())a:)::a:(aa:):()((a:)())aa)a(a:)"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample12() throws IOException {
+		assertAccepted(S, "()(((a)((aa)))a)a()(a)(aa:a)()(((:())aa)):()():():a:(a)(a())a:)::a:(aa:):()((a:)())aa)a(a:)");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code ":)()((a)):(():a:a:)(:a)):)(()(:)::::(a(::a())(a):(:((((:(aa(()))a)(((((((((()a()a):)))((:)))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample13() throws IOException {
+		assertAccepted(S,
+				":)()((a)):(():a:a:)(:a)):)(()(:)::::(a(::a())(a):(:((((:(aa(()))a)(((((((((()a()a):)))((:)))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "a(a)::(((::)))())((a)(:((:a())):((::(:()(a)))i am trapped in a test case generator :(:(a(:::))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample14() throws IOException {
+		assertAccepted(S,
+				"a(a)::(((::)))())((a)(:((:a())):((::(:()(a)))i am trapped in a test case generator :(:(a(:::))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "():)a((a:((aaa(()))(((()a))()))a(:)):)a((:())(a:(:):((a(:(::())a()())::()a)(a)):((aa)a(:(())"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample15() throws IOException {
+		assertAccepted(S,
+				"():)a((a:((aaa(()))(((()a))()))a(:)):)a((:())(a:(:):((a(:(::())a()())::()a)(a)):((aa)a(:(())");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((:):::(()()):)(()()():())aaa)(:(a:)a:((())a(((a(:())aa():a:)((()):)(()(:)(a())a:()a)a():("}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample16() throws IOException {
+		assertAccepted(S, "((:):::(()()):)(()()():())aaa)(:(a:)a:((())a(((a(:())aa():a:)((()):)(()(:)(a())a:()a)a():(");
+	}
+
+	/**
+	 * Test that the word {@code "(:a))"} is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample17() throws IOException {
+		assertRejected(S, "(:a))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "::((:))(((:)(aaa)(a())()(a:)(:)(:)()):)a())aa)())(():a):()::):)a()())a()):):(:a)a):()(a)(a)"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample18() throws IOException {
+		assertAccepted(S, "::((:))(((:)(aaa)(a())()(a:)(:)(:)()):)a())aa)())(():a):()::):)a()())a()):):(:a)a):()(a)(a)");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "()a(:)(a:a):(())):a()():((a(:):a()()::)(a:)(()a((a:)(a)a(a:a:)(a)a(a:(()()()::a()a()(()a:())))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample19() throws IOException {
+		assertAccepted(S,
+				"()a(:)(a:a):(())):a()():((a(:):a()()::)(a:)(()a((a:)(a)a(a:a:)(a)a(a:(()()()::a()a()(()a:())))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "()((:a(a()()a))())((:a(:a)(()a((((a((a(()(:aa()()()))):)(():):)(:(a))():(())(():()):):(()a))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample20() throws IOException {
+		assertAccepted(S,
+				"()((:a(a()()a))())((:a(:a)(()a((((a((a(()(:aa()()()))):)(():):)(:(a))():(())(():()):):(()a))");
+	}
+
+	/**
+	 * Test that the word {@code "(((((((((())))))))))"} is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample21() throws IOException {
+		assertAccepted(S, "(((((((((())))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "(((((((((((((((((((())))))))))))))))))))"} is
+	 * accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample22() throws IOException {
+		assertAccepted(S, "(((((((((((((((((((())))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "((((((((((:))))))))))"} is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample23() throws IOException {
+		assertAccepted(S, "((((((((((:))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample24() throws IOException {
+		assertAccepted(S,
+				"((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))"}
+	 * is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample25() throws IOException {
+		assertRejected(S,
+				"(((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample26() throws IOException {
+		assertAccepted(
+				S,
+				"(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:))))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample27() throws IOException {
+		assertAccepted(
+				S,
+				"((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((((:))))))))))((((((((((:())))))))))))"} is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample28() throws IOException {
+		assertAccepted(S, "((((((((((((:))))))))))((((((((((:())))))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "(((((((((()))))))))))"} is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample29() throws IOException {
+		assertRejected(S, "(((((((((()))))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "(((((((((((((((((((()))))))))))))))))))))"} is
+	 * rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample30() throws IOException {
+		assertRejected(S, "(((((((((((((((((((()))))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "((((((((((:)))))))))))"} is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample31() throws IOException {
+		assertAccepted(S, "((((((((((:)))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:)))))))))))))))))))))))))))))))))))))))))))))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample32() throws IOException {
+		assertAccepted(
+				S,
+				"(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:)))))))))))))))))))))))))))))))))))))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))))"}
+	 * is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample33() throws IOException {
+		assertAccepted(
+				S,
+				"((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((((:))))))))))((((((((((:)))))))))))))"} is accepted.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample34() throws IOException {
+		assertAccepted(S, "((((((((((((:))))))))))((((((((((:)))))))))))))");
+	}
+
+	/**
+	 * Test that the word {@code "((((((((((:))))))))))))"} is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample35() throws IOException {
+		assertRejected(S, "((((((((((:))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((((:))))))))))((((((((((:)))))))))))))))"} is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample36() throws IOException {
+		assertRejected(S, "((((((((((((:))))))))))((((((((((:)))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))))))))))"}
+	 * is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample37() throws IOException {
+		assertRejected(
+				S,
+				"((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))) ((((((((((:)))))))))))))))))");
+	}
+
+	/**
+	 * Test that the word
+	 * {@code "(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))))))"}
+	 * is rejected.
+	 * 
+	 * @throws IOException
+	 *             when something goes wrong with the Reader.
+	 */
+	@Test
+	public final void testExample38() throws IOException {
+		assertRejected(
+				S,
+				"(a((f((g(((g((:))))g))))))::((((((((((((((((((((:)))))))))))))))))))) ((((((((((((((((((((((((((((((((((((((((((((((((((:))))))))))))))))))))))))))))))))))))))))))))))))))))))");
 	}
 
 	/**
