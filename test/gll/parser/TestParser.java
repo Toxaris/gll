@@ -18,6 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		TestParserWithHiddenLeftRecursion.class,
 		TestParserWithWhiteboardExample.class,
 		TestParserWithFactoredGrammar.class,
-		TestParserWithVeryAmbiguousGrammar.class})
+		TestParserWithVeryAmbiguousGrammar.class,
+		TestParserWithBalancedSmileys.class})
 public class TestParser {
 }
