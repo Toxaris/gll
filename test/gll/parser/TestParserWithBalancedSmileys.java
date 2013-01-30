@@ -15,7 +15,7 @@ import org.junit.Test;
  * Test that the parser correctly handles the "balanced smileys" grammar:
  * 
  * <pre>
- * S  ::=  ε | [a-z] | ' ' | ':' | ':' P | '(' S ')' | P P
+ * S  ::=  ε | [a-z] | ' ' | ':' | ':' P | '(' S ')' | S S
  * P  ::=  '(' | ')'
  * </pre>
  * 
