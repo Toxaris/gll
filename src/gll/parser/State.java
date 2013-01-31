@@ -55,9 +55,6 @@ public class State {
 	 * This set is used to handle left recursion by ensuring that no descriptor
 	 * is scheduled twice.
 	 * </p>
-	 * 
-	 * @param foo
-	 *            bar baz boo
 	 */
 	public final Set<Stack> deadLater = new HashSet<Stack>();
 
@@ -85,6 +82,9 @@ public class State {
 	 */
 	public Set<FutureProcess> future = new HashSet<FutureProcess>();
 
+	/**
+	 * The next position in the token stream.
+	 */
 	public Position next = BeforeInput.create();
 
 	/**
@@ -101,12 +101,19 @@ public class State {
 	 */
 	public int position = -1;
 
+	/**
+	 * The start symbol of the grammar we are parsing.
+	 */
 	public Sort start;
 
 	/**
 	 * The derivation associated with the current token.
 	 */
 	public TerminalSymbolDerivation tokenDerivation;
+
+	/**
+	 * The return slot associated with the current token.
+	 */
 	public Slot tokenReturnSlot;
 
 	/**
@@ -114,6 +121,9 @@ public class State {
 	 */
 	private final Initial empty = new Initial();
 
+	/**
+	 * A cache to avoid recreating identical empty intermediate derivations.
+	 */
 	private final Cache1<Slot, EmptyIntermediateDerivation> emptyIntermediateDerivations = new Cache1<Slot, EmptyIntermediateDerivation>() {
 		@Override
 		protected EmptyIntermediateDerivation compute(final Slot label) {
@@ -121,6 +131,9 @@ public class State {
 		}
 	};
 
+	/**
+	 * The first position in the token stream.
+	 */
 	private Position first;
 
 	/**
@@ -128,6 +141,10 @@ public class State {
 	 */
 	private final Set<Stack> gss = new HashSet<Stack>();
 
+	/**
+	 * A cache to avoid recreating identical derivations for nonterminal
+	 * symbols.
+	 */
 	private final Cache2<Sort, Position, NonterminalSymbolDerivation> nonterminalSymbolDerivations = new Cache2<Sort, Position, NonterminalSymbolDerivation>() {
 		/**
 		 * {@inheritDoc}
@@ -138,10 +155,19 @@ public class State {
 		}
 	};
 
+	/**
+	 * The previous position in the token stream.
+	 */
 	private Position previous = null;
 
+	/**
+	 * The current result of parsing.
+	 */
 	private NonterminalSymbolDerivation result;
 
+	/**
+	 * A cache to avoid recreating identical derivations for symbols.
+	 */
 	private final Cache2<Slot, Position, SymbolIntermediateDerivation> symbolIntermediateDerivations = new Cache2<Slot, Position, SymbolIntermediateDerivation>() {
 		@Override
 		protected SymbolIntermediateDerivation compute(final Slot label, final Position first) {
@@ -150,10 +176,23 @@ public class State {
 	};
 
 	/**
+	 * Create a packed node in the SPPF to combine the two intermediate
+	 * derivations.
+	 * 
+	 * <p>
+	 * I think this function shows up in the paper on GLL parsing?
+	 * </p>
+	 * 
 	 * @param slot
+	 *            the current grammar slot
 	 * @param lhs
+	 *            the first intermediate derivation to combine in the binary
+	 *            node
 	 * @param rhs
-	 * @return
+	 *            the second intermediate derivation to combine in the binary
+	 *            node
+	 * @return a intermediate derivation that contains a packed node that
+	 *         combines {@code lhs} and {@code rhs}
 	 */
 	public SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation<?> lhs,
 			final SymbolDerivation<?, ?> rhs) {
@@ -168,16 +207,30 @@ public class State {
 	}
 
 	/**
+	 * Create an empty derivation for some grammar slot.
+	 * 
+	 * <p>
+	 * I think this function shows up in the paper on GLL parsing?
+	 * </p>
+	 * 
 	 * @param slot
-	 * @return
+	 *            the current grammar slot
+	 * @return empty derivation
 	 */
 	public IntermediateDerivation<?> createEmpty(final Slot slot) {
 		return emptyIntermediateDerivations.apply(slot);
 	}
 
 	/**
-	 * @param wrapped
-	 * @return
+	 * Create a derivation for a nonterminal symbol.
+	 * 
+	 * @param sort
+	 *            the sort of the nonterminal symbol
+	 * @param first
+	 *            the first token of the new derivation
+	 * @param derivation
+	 *            the derivation for the production
+	 * @return a derivation for the sort
 	 */
 	public NonterminalSymbolDerivation createNonterminalSymbolDerivation(final Sort sort, final Position first,
 			final ProductionDerivation derivation) {
@@ -187,11 +240,10 @@ public class State {
 	}
 
 	/**
-	 * Marks as scheduled. Returns whether it was scheduled before.
+	 * Mark as scheduled. Return whether it was scheduled before.
 	 * 
-	 * @param production
-	 * @param action
-	 * @param caller
+	 * @param slot
+	 * @param frame
 	 * @return
 	 */
 	public boolean deadNow(final Slot slot, final Stack frame) {
@@ -219,12 +271,26 @@ public class State {
 		return empty;
 	}
 
+	/**
+	 * Return the result of parsing.
+	 * 
+	 * @return the result of parsing.
+	 */
 	public NonterminalSymbolDerivation getResult() {
 		return result;
 	}
 
 	/**
-	 * @param node
+	 * Mark a result as being popped from a frame.
+	 * 
+	 * <p>
+	 * We have to remember the popped results because we want to consider them
+	 * if we later link additional parent frames to the frame. See
+	 * {@link #push(Slot, Stack, int, IntermediateDerivation)}.
+	 * </p>
+	 * 
+	 * @param frame
+	 * @param result
 	 */
 	public void markPopped(final Frame frame, final SymbolDerivation<?, ?> result) {
 		Set<SymbolDerivation<?, ?>> results = popped.get(frame);
@@ -234,6 +300,12 @@ public class State {
 		results.add(result);
 	}
 
+	/**
+	 * Prepare the parser for consuming the next token.
+	 * 
+	 * @param codepoint
+	 *            the next token
+	 */
 	public void nextToken(final int codepoint) {
 		// reset caches that depend on current token position
 		active.addAll(future);
@@ -272,11 +344,17 @@ public class State {
 	 * Create a stack frame with the given data.
 	 * 
 	 * <p>
+	 * If the newly created stack frame already exists, we reconsider all
+	 * results that have been marked for the existing frame. See
+	 * {@link #markPopped(Frame, SymbolDerivation)}.
+	 * </p>
+	 * 
+	 * <p>
 	 * This is the function <emph>create</emph> from Scott and Johnstone (2010).
 	 * </p>
 	 * 
 	 * @param slot
-	 * @param stack
+	 * @param caller
 	 * @param token
 	 * @param derivation
 	 */
@@ -300,6 +378,19 @@ public class State {
 		return callee;
 	}
 
+	/**
+	 * Schedule a parsing process to be run after we finish processing the
+	 * current token. This method is only called after processing a terminal
+	 * symbol, so the first action of the future process will be to jump back to
+	 * the slot in the grammar after the terminal symbol.
+	 * 
+	 * @param caller
+	 *            the stack frame of the caller of the terminal symbol. This
+	 *            will be the stack frame of the future parsing process.
+	 * @param derivation
+	 *            the derivation of the token just consumed. This will be merged
+	 *            with the derivation in the caller stack frame.
+	 */
 	public void scheduleLater(final Stack caller, final TerminalSymbolDerivation derivation) {
 		if (!deadLater.contains(caller)) {
 			deadLater.add(caller);
@@ -308,10 +399,17 @@ public class State {
 	}
 
 	/**
-	 * @param production
-	 * @param action
+	 * Schedule a parsing process to be run before we finish processing the
+	 * current token. This method is called after all kinds of processing steps
+	 * except consuming a token, so the first action of the scheduled parsing
+	 * process will be to continue parsing at some grammar slot.
+	 * 
+	 * @param slot
+	 *            the grammar slot to be processed by the scheduled process
 	 * @param caller
+	 *            the stack frame to be associated with the scheduled process
 	 * @param derivation
+	 *            the intermediate derivation constructed so far
 	 */
 	public void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation<?> derivation) {
 		if (!deadNow(slot, caller)) {
@@ -319,6 +417,13 @@ public class State {
 		}
 	}
 
+	/**
+	 * Exports the graph-structured stack to a <code>*.dot</code> file (for
+	 * GraphViz).
+	 * 
+	 * @param file
+	 *            the name of the file to write to
+	 */
 	public void writeGSS(final String file) {
 		final GraphBuilder builder = new GraphBuilder();
 		for (final Stack stack : gss) {
