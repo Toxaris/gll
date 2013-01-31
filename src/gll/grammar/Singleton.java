@@ -20,8 +20,20 @@ public class Singleton extends TerminalSymbol {
 	 * @param codepoint
 	 *            the codepoint to accept
 	 */
-	Singleton(int codepoint) {
-		super(new String(Character.toChars(codepoint)));
+	Singleton(final int codepoint) {
+		this(new String(Character.toChars(codepoint)), codepoint);
+	}
+
+	/**
+	 * Create singleton token with custom name.
+	 * 
+	 * @param name
+	 *            the custom name of the singleton token
+	 * @param codepoint
+	 *            the codepoint to accept
+	 */
+	Singleton(final String name, final int codepoint) {
+		super(name);
 		this.codepoint = codepoint;
 	}
 
@@ -38,7 +50,7 @@ public class Singleton extends TerminalSymbol {
 	 *         otherwise
 	 */
 	@Override
-	public boolean accept(int codepoint) {
+	public boolean accept(final int codepoint) {
 		return this.codepoint == codepoint;
 	}
 }

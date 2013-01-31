@@ -37,6 +37,32 @@ public abstract class TerminalSymbol extends Symbol {
 	}
 
 	/**
+	 * Create a terminal symbol with a custom name for a character.
+	 * 
+	 * @param character
+	 *            the character to accept.
+	 * 
+	 * @return a terminal symbol that accepts {@code character}
+	 */
+	public static TerminalSymbol singleton(final String name, final char character) {
+		return singleton(name, (int) character);
+	}
+
+	/**
+	 * Create a terminal symbol with a custom name for a Unicode codepoint.
+	 * 
+	 * @param name
+	 *            the custom name
+	 * @param codepoint
+	 *            the codepoint to accept
+	 * 
+	 * @return a terminal symbol that accepts {@code codepoint}
+	 */
+	public static TerminalSymbol singleton(final String name, final int codepoint) {
+		return new Singleton(name, codepoint);
+	}
+
+	/**
 	 * Create token.
 	 * 
 	 * @param name
