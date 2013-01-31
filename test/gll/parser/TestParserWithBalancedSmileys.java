@@ -3,8 +3,12 @@
  */
 package gll.parser;
 
+import static gll.grammar.common.Characters.COLON;
+import static gll.grammar.common.Characters.LETTER;
+import static gll.grammar.common.Characters.LPAREN;
+import static gll.grammar.common.Characters.RPAREN;
+import static gll.grammar.common.Characters.SPACE;
 import gll.grammar.Sort;
-import gll.grammar.TerminalSymbol;
 
 import java.io.IOException;
 
@@ -42,31 +46,16 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	public void setUp() {
 		final Sort P = new Sort("P");
 
-		final TerminalSymbol letter = new TerminalSymbol("[a-z]") {
-			/**
-			 * {@inheritDoc}
-			 */
-			@Override
-			public boolean accept(final int codepoint) {
-				return codepoint >= 'a' && codepoint <= 'z';
-			}
-		};
-
-		final TerminalSymbol space = TerminalSymbol.singleton(' ');
-		final TerminalSymbol colon = TerminalSymbol.singleton(':');
-		final TerminalSymbol lparen = TerminalSymbol.singleton('(');
-		final TerminalSymbol rparen = TerminalSymbol.singleton(')');
-
 		S.add();
-		S.add(letter);
-		S.add(space);
-		S.add(colon);
-		S.add(colon, P);
-		S.add(lparen, S, rparen);
+		S.add(LETTER);
+		S.add(SPACE);
+		S.add(COLON);
+		S.add(COLON, P);
+		S.add(LPAREN, S, RPAREN);
 		S.add(S, S);
 
-		P.add(lparen);
-		P.add(rparen);
+		P.add(LPAREN);
+		P.add(RPAREN);
 	}
 
 	/**
@@ -599,5 +588,4 @@ public class TestParserWithBalancedSmileys extends AllTests {
 	public final void testHelloWorld() throws IOException {
 		assertAccepted(S, "hello world");
 	}
-
 }
