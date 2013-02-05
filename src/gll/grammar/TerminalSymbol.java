@@ -106,7 +106,7 @@ public abstract class TerminalSymbol extends Symbol {
 	@Override
 	public void call(final State state, final Stack frame, final int codepoint) {
 		if (accept(codepoint)) {
-			state.scheduleLater(frame, state.tokenDerivation);
+			state.scheduleLater(frame, state.createTokenDerivation());
 		}
 	}
 }

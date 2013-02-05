@@ -55,7 +55,7 @@ public class Parser {
 	/**
 	 * Parser state.
 	 */
-	private final State state = new State();
+	private final ParsingState state = new ParsingState();
 
 	/**
 	 * Create Parser.

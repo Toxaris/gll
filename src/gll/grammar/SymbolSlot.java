@@ -97,7 +97,7 @@ public class SymbolSlot extends Slot {
 	@Override
 	public void parse(final State state, final Stack caller, final IntermediateDerivation<?> derivation,
 			final int codepoint) {
-		final Stack callee = state.push(next, caller, state.position, derivation);
+		final Stack callee = state.push(next, caller, state.getPosition(), derivation);
 		symbol.call(state, callee, codepoint);
 	}
 }
