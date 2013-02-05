@@ -17,6 +17,11 @@ public class Characters {
 	public static final TerminalSymbol COLON = TerminalSymbol.singleton("colon", ':');
 
 	/**
+	 * The terminal symbol “<code>,</code>”.
+	 */
+	public static final TerminalSymbol COMMA = TerminalSymbol.singleton("comma", ',');
+
+	/**
 	 * The terminal symbol “<code>-</code>”.
 	 */
 	public static final TerminalSymbol DASH = TerminalSymbol.singleton("dash", '-');
@@ -36,6 +41,16 @@ public class Characters {
 	 * The terminal symbol “<code>.</code>”.
 	 */
 	public static final TerminalSymbol DOT = TerminalSymbol.singleton("dot", '.');
+
+	/**
+	 * The terminal symbol “<code>=</code>”.
+	 */
+	public static final TerminalSymbol EQUALS = TerminalSymbol.singleton("equals", '=');
+
+	/**
+	 * The terminal symbol “<code>></code>”.
+	 */
+	public static final TerminalSymbol GT = TerminalSymbol.singleton("greater than", '>');
 
 	/**
 	 * The terminal symbol “<code>{</code>”.
@@ -59,9 +74,25 @@ public class Characters {
 	};
 
 	/**
+	 * A terminal symbol that is an lower case letter (as determined by
+	 * {@link Character#isLowerCase(int)}).
+	 */
+	public static final TerminalSymbol LOWER_CASE = new TerminalSymbol("upper case letter") {
+		@Override
+		public boolean accept(final int codepoint) {
+			return Character.isLowerCase(codepoint);
+		}
+	};
+
+	/**
 	 * The terminal symbol “<code>(</code>”.
 	 */
 	public static final TerminalSymbol LPAREN = TerminalSymbol.singleton("left parenthesis", '(');
+
+	/**
+	 * The terminal symbol “<code>|</code>”.
+	 */
+	public static final TerminalSymbol PIPE = TerminalSymbol.singleton("pipe", '|');
 
 	/**
 	 * The terminal symbol “<code>}</code>”.
@@ -87,5 +118,16 @@ public class Characters {
 	 * The terminal symbol “<code> </code>” (space).
 	 */
 	public static final TerminalSymbol SPACE = TerminalSymbol.singleton("space", ' ');
+
+	/**
+	 * A terminal symbol that is an upper case letter (as determined by
+	 * {@link Character#isUpperCase(int)}).
+	 */
+	public static final TerminalSymbol UPPER_CASE = new TerminalSymbol("upper case letter") {
+		@Override
+		public boolean accept(final int codepoint) {
+			return Character.isUpperCase(codepoint);
+		}
+	};
 
 }
