@@ -14,7 +14,7 @@ import java.util.Stack;
  * 
  * @author Tillmann Rendel
  */
-public class Environment<Key, Value> {
+public class Environment<Key, Value> implements Scoped {
 	/**
 	 * For each scope, the set of keys that have been bound in that scope.
 	 */
@@ -37,25 +37,17 @@ public class Environment<Key, Value> {
 	}
 
 	/**
-	 * Begin a scope.
-	 * 
-	 * <p>
-	 * The corresponding call to {@link #endScope()} removes all bindings that
-	 * are added after the call to {@code beginScope()}.
-	 * </p>
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void beginScope() {
 		changed.add(new HashSet<Key>());
 	}
 
 	/**
-	 * End a scope.
-	 * 
-	 * <p>
-	 * The call to {@code endScope()} removes all bindings that were added after
-	 * the corresponding call to {@link #beginScope()}.
-	 * </p>
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void endScope() {
 		for (final Key key : changed.pop()) {
 			entries.get(key).pop();
