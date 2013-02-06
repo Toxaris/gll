@@ -26,7 +26,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithVeryAmbiguousGrammar extends AllTests {
+public class TestParserWithVeryAmbiguousGrammar extends TestParser {
 	private final Sort S = new Sort("S");
 
 	/**

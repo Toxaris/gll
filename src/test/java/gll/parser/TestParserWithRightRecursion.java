@@ -30,7 +30,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithRightRecursion extends AllTests {
+public class TestParserWithRightRecursion extends TestParser {
 	private Sort S = new Sort("S");
 
 	/**

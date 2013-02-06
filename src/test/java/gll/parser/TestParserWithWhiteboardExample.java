@@ -22,7 +22,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithWhiteboardExample extends AllTests {
+public class TestParserWithWhiteboardExample extends TestParser {
 	private final Sort S = new Sort("S");
 
 	/**

@@ -3,7 +3,9 @@
  */
 package gll.parser;
 
+import static org.junit.Assert.assertTrue;
 import gll.grammar.Sort;
+import gll.sppf.SymbolDerivation;
 
 import java.io.IOException;
 
@@ -11,37 +13,40 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test that the parser correctly handles the empty grammar.
+ * Test that the parser correctly handles the grammar that accepts only the
+ * empty word:
  * 
  * <pre>
- * S  ::=
+ * S  ::=  ε
  * </pre>
  * 
  * <p>
- * This grammar should not accept any words, not even the empty word.
+ * This grammar should only accept the empty word.
  * </p>
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithEmptyGrammar extends AllTests {
-	private Sort S = new Sort("S");
+public class TestParserWithSingletonGrammar extends TestParser {
+	private final Sort S = new Sort("S");
 
 	/**
 	 * Create the grammar.
 	 */
 	@Before
 	public void setUp() {
+		S.add();
 	}
 
 	/**
-	 * Test that the empty word {@code ""} is rejected.
+	 * Test that the empty word {@code ""} is accepted.
 	 * 
 	 * @throws IOException
 	 *             when something goes wrong with the Reader.
 	 */
 	@Test
 	public final void testEmpty() throws IOException {
-		assertRejected(S, "");
+		final SymbolDerivation<?, ?> result = assertAccepted(S, "");
+		assertTrue("unexpected ambiguities", result.getChildren().size() == 1);
 	}
 
 	/**

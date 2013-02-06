@@ -21,7 +21,7 @@ import org.junit.rules.Timeout;
  * @author Tillmann Rendel
  * 
  */
-public class AllTests {
+public class TestParser {
 	@Rule
 	public MethodRule timeout = new Timeout(500);
 

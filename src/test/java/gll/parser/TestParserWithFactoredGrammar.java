@@ -30,7 +30,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithFactoredGrammar extends AllTests {
+public class TestParserWithFactoredGrammar extends TestParser {
 	private Sort S = new Sort("S");
 
 	/**

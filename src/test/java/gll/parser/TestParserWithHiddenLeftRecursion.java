@@ -26,7 +26,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithHiddenLeftRecursion extends AllTests {
+public class TestParserWithHiddenLeftRecursion extends TestParser {
 	private Sort S = new Sort("S");
 
 	/**

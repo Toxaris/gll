@@ -36,7 +36,7 @@ import org.junit.Test;
  * 
  * @author Tillmann Rendel
  */
-public class TestParserWithBalancedSmileys extends AllTests {
+public class TestParserWithBalancedSmileys extends TestParser {
 	private final Sort S = new Sort("S");
 
 	/**
