@@ -5,7 +5,7 @@ package gll.gss;
 
 import gll.grammar.Slot;
 import gll.parser.State;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
 import gll.sppf.SymbolDerivation;
 
 import java.util.HashSet;
@@ -94,7 +94,7 @@ public class Frame extends Stack {
 	 * @param derivation
 	 *            the associated derivation
 	 */
-	public Link link(final Stack that, final IntermediateDerivation derivation) {
+	public Link link(final Stack that, final Intermediate<?> derivation) {
 		final Link result = new Link(that, derivation);
 		stacks.add(result);
 		return result;

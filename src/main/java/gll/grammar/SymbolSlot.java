@@ -5,9 +5,9 @@ package gll.grammar;
 
 import gll.gss.Stack;
 import gll.parser.State;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 
 /**
  * A grammar slot that is associated with parsing a symbol.
@@ -72,9 +72,9 @@ public class SymbolSlot extends Slot {
 	 * .Derivation, fomegastar.syntax.parser.Derivation)
 	 */
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
+	public IntermediateCons createDerivation(final State state, final Intermediate<?> lhs,
 			final SymbolDerivation<?, ?> rhs) {
-		return state.createBranch(this, lhs, rhs);
+		return state.append(this, lhs, rhs);
 	}
 
 	/**
@@ -95,8 +95,7 @@ public class SymbolSlot extends Slot {
 	 *            the current codepoint to parse
 	 */
 	@Override
-	public void parse(final State state, final Stack caller, final IntermediateDerivation derivation,
-			final int codepoint) {
+	public void parse(final State state, final Stack caller, final Intermediate<?> derivation, final int codepoint) {
 		final Stack callee = state.push(next, caller, state.getPosition(), derivation);
 		symbol.call(state, callee, codepoint);
 	}

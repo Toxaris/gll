@@ -6,7 +6,7 @@ package gll.grammar;
 import gll.gss.Stack;
 import gll.parser.State;
 import gll.sppf.DerivationLabel;
-import gll.sppf.ProductionDerivation;
+import gll.sppf.Unary;
 
 /**
  * @author Tillmann Rendel
@@ -48,7 +48,7 @@ public class Production implements DerivationLabel {
 		first.appendPrefix(slot, prefix);
 	}
 
-	public Object extract(final ProductionDerivation derivation) {
+	public Object extract(final Unary derivation) {
 		throw new Error("Parser problem");
 	}
 
@@ -70,7 +70,7 @@ public class Production implements DerivationLabel {
 	 *            the stack frame to use for the process.
 	 */
 	public void schedule(final State state, final Stack callee) {
-		state.scheduleNow(first, callee, state.createEmpty(first));
+		state.scheduleNow(first, callee, state.createEmpty());
 	}
 
 	@Override

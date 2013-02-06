@@ -5,7 +5,7 @@ package gll.parser;
 
 import gll.grammar.Slot;
 import gll.gss.Stack;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
 
 /**
  * A process descriptor during parsing.
@@ -16,7 +16,7 @@ public class SlotProcess extends Process {
 	/**
 	 * Current derivation.
 	 */
-	private final IntermediateDerivation derivation;
+	private final Intermediate<?> derivation;
 
 	/**
 	 * The grammar slot we have to parse next
@@ -31,7 +31,7 @@ public class SlotProcess extends Process {
 	 * @param stack
 	 *            our stack
 	 */
-	public SlotProcess(final Slot slot, final Stack stack, final IntermediateDerivation derivation) {
+	public SlotProcess(final Slot slot, final Stack stack, final Intermediate<?> derivation) {
 		super(stack);
 		this.slot = slot;
 		this.derivation = derivation;

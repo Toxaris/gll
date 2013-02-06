@@ -6,9 +6,9 @@ package gll.grammar;
 import gll.gss.Stack;
 import gll.parser.State;
 import gll.sppf.DerivationLabel;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 
 /**
  * A grammar slot.
@@ -32,7 +32,7 @@ public abstract class Slot implements DerivationLabel {
 	 * @param result
 	 * @return
 	 */
-	public abstract SymbolIntermediateDerivation createDerivation(State state, IntermediateDerivation derivation,
+	public abstract IntermediateCons createDerivation(State state, Intermediate<?> derivation,
 			SymbolDerivation<?, ?> result);
 
 	/**
@@ -47,7 +47,7 @@ public abstract class Slot implements DerivationLabel {
 	 * @param codepoint
 	 *            the current codepoint to parse
 	 */
-	public abstract void parse(State state, Stack frame, IntermediateDerivation derivation, int codepoint);
+	public abstract void parse(State state, Stack frame, Intermediate<?> derivation, int codepoint);
 
 	@Override
 	public String toString() {

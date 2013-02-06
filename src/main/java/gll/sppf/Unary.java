@@ -11,19 +11,30 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A <i>unary</i> packed derivation node in the shared packed parse forest.
+ * 
+ * <p>
+ * The packed node is labeled by a production and points to one derivation node.
+ * Two unary packed nodes are merged if they are fully equivalent, that is, they
+ * are labeled by the same production and point to the same derivation node.
+ * </p>
+ * 
  * @author Tillmann Rendel
  */
-public class ProductionDerivation extends Derivation<Production, IntermediateDerivation> {
-	private final IntermediateDerivation child;
+public class Unary extends Packed {
+	private final Intermediate<?> child;
+
+	private final Production production;
 
 	/**
-	 * Create ProductionDerivation.
+	 * Create unary packed derivation.
 	 * 
-	 * @param label
+	 * @param production
 	 * @param child
 	 */
-	public ProductionDerivation(final Production label, final IntermediateDerivation child) {
-		super(label);
+	public Unary(final Production production, final Intermediate<?> child) {
+		super();
+		this.production = production;
 		this.child = child;
 	}
 
@@ -41,7 +52,7 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final ProductionDerivation other = (ProductionDerivation) obj;
+		final Unary other = (Unary) obj;
 		if (child == null) {
 			if (other.child != null) {
 				return false;
@@ -56,7 +67,7 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 	 * @return
 	 */
 	public Object extract() {
-		return getLabel().extract(this);
+		return production.extract(this);
 	}
 
 	/**
@@ -74,7 +85,7 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<? extends IntermediateDerivation> getChildren() {
+	public Set<? extends Intermediate<?>> getChildren() {
 		return Collections.singleton(child);
 	}
 
@@ -82,16 +93,8 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Position getFirst() {
-		return child.getFirst();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Position getLast() {
-		return child.getLast();
+	public String[] getLabels() {
+		return new String[] { production.toString() };
 	}
 
 	/**

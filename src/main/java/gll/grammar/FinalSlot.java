@@ -5,9 +5,9 @@ package gll.grammar;
 
 import gll.gss.Stack;
 import gll.parser.State;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 
 /**
  * @author Tillmann Rendel
@@ -35,13 +35,13 @@ public class FinalSlot extends Slot {
 	}
 
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
+	public IntermediateCons createDerivation(final State state, final Intermediate<?> lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		// TODO avoid having to implement this method
 		return null;
 	}
 
 	@Override
-	public void parse(final State state, final Stack frame, final IntermediateDerivation derivation, final int codepoint) {
+	public void parse(final State state, final Stack frame, final Intermediate<?> derivation, final int codepoint) {
 	}
 }

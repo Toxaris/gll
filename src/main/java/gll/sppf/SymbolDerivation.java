@@ -3,10 +3,11 @@
  */
 package gll.sppf;
 
-
 /**
- * @author Tillmann Rendel
+ * A derivation in the shared packed parse forest that represents the derivation
+ * for a symbol.
  * 
+ * @author Tillmann Rendel
  */
 public abstract class SymbolDerivation<Label extends DerivationLabel, Child extends SPPFNode<?>> extends
 		Derivation<Label, Child> {

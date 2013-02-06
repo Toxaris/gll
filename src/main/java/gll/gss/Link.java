@@ -5,9 +5,8 @@ package gll.gss;
 
 import gll.grammar.Slot;
 import gll.parser.State;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 
 import java.util.Collections;
 import java.util.Set;
@@ -32,7 +31,7 @@ public class Link extends GSSNode<Stack> {
 	/**
 	 * The associated derivation.
 	 */
-	private final IntermediateDerivation derivation;
+	private final Intermediate<?> derivation;
 
 	/**
 	 * Create a link.
@@ -42,7 +41,7 @@ public class Link extends GSSNode<Stack> {
 	 * @param derivation
 	 *            the associated deriation
 	 */
-	public Link(final Stack caller, final IntermediateDerivation derivation) {
+	public Link(final Stack caller, final Intermediate<?> derivation) {
 		this.caller = caller;
 		this.derivation = derivation;
 	}
@@ -92,7 +91,7 @@ public class Link extends GSSNode<Stack> {
 	 *            the parser state
 	 */
 	public void schedule(final State state, final SymbolDerivation<?, ?> result, final Slot slot) {
-		final SymbolIntermediateDerivation y = state.createBranch(slot, derivation, result);
+		final Intermediate<?> y = state.append(slot, derivation, result);
 		state.scheduleNow(slot, caller, y);
 	}
 }

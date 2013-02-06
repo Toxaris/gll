@@ -9,15 +9,15 @@ import gll.gss.Stack;
 import gll.sppf.AfterInput;
 import gll.sppf.BeforeInput;
 import gll.sppf.Binary;
-import gll.sppf.EmptyIntermediateDerivation;
 import gll.sppf.InputSymbol;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
+import gll.sppf.IntermediateEmpty;
 import gll.sppf.NonterminalSymbolDerivation;
 import gll.sppf.Position;
-import gll.sppf.ProductionDerivation;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 import gll.sppf.TerminalSymbolDerivation;
+import gll.sppf.Unary;
 import graph.dot.GraphBuilder;
 
 import java.io.FileNotFoundException;
@@ -29,7 +29,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import cache.Cache1;
 import cache.Cache2;
 
 /**
@@ -124,12 +123,7 @@ public class ParsingState implements State {
 	/**
 	 * A cache to avoid recreating identical empty intermediate derivations.
 	 */
-	private final Cache1<Slot, EmptyIntermediateDerivation> emptyIntermediateDerivations = new Cache1<Slot, EmptyIntermediateDerivation>() {
-		@Override
-		protected EmptyIntermediateDerivation compute(final Slot label) {
-			return new EmptyIntermediateDerivation(label, previous, next);
-		}
-	};
+	private IntermediateEmpty emptyDerivation = null;
 
 	/**
 	 * The first position in the token stream.
@@ -140,6 +134,16 @@ public class ParsingState implements State {
 	 * The set of all GSS stacks ever created (for debugging!)
 	 */
 	private final Set<Stack> gss = new HashSet<Stack>();
+
+	/**
+	 * A cache to avoid recreating identical derivations for symbols.
+	 */
+	private final Cache2<Slot, Position, IntermediateCons> intermediateCons = new Cache2<Slot, Position, IntermediateCons>() {
+		@Override
+		protected IntermediateCons compute(final Slot label, final Position first) {
+			return new IntermediateCons(label, first, previous);
+		}
+	};
 
 	/**
 	 * A cache to avoid recreating identical derivations for nonterminal
@@ -166,25 +170,14 @@ public class ParsingState implements State {
 	private NonterminalSymbolDerivation result;
 
 	/**
-	 * A cache to avoid recreating identical derivations for symbols.
-	 */
-	private final Cache2<Slot, Position, SymbolIntermediateDerivation> symbolIntermediateDerivations = new Cache2<Slot, Position, SymbolIntermediateDerivation>() {
-		@Override
-		protected SymbolIntermediateDerivation compute(final Slot label, final Position first) {
-			return new SymbolIntermediateDerivation(label, first, previous);
-		}
-	};
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation lhs,
-			final SymbolDerivation<?, ?> rhs) {
+	public IntermediateCons append(final Slot slot, final Intermediate<?> lhs, final SymbolDerivation<?, ?> rhs) {
 		final Position first = lhs.getFirst();
 		final Position middle = rhs.getFirst();
 
-		final SymbolIntermediateDerivation result = symbolIntermediateDerivations.apply(slot, first);
+		final IntermediateCons result = intermediateCons.apply(slot, first);
 
 		result.add(new Binary(slot, middle, lhs, rhs));
 
@@ -195,8 +188,8 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IntermediateDerivation createEmpty(final Slot slot) {
-		return emptyIntermediateDerivations.apply(slot);
+	public IntermediateEmpty createEmpty() {
+		return emptyDerivation;
 	}
 
 	/**
@@ -204,7 +197,7 @@ public class ParsingState implements State {
 	 */
 	@Override
 	public NonterminalSymbolDerivation createNonterminalSymbolDerivation(final Sort sort, final Position first,
-			final ProductionDerivation derivation) {
+			final Unary derivation) {
 		final NonterminalSymbolDerivation result = nonterminalSymbolDerivations.apply(sort, first);
 		result.add(derivation);
 		return result;
@@ -288,9 +281,8 @@ public class ParsingState implements State {
 
 		frames.clear();
 		popped.clear();
-		symbolIntermediateDerivations.clear();
+		intermediateCons.clear();
 		nonterminalSymbolDerivations.clear();
-		emptyIntermediateDerivations.clear();
 
 		// increase token position
 		position = position + 1;
@@ -309,6 +301,8 @@ public class ParsingState implements State {
 			first = next;
 		}
 
+		emptyDerivation = new IntermediateEmpty(next, previous);
+
 		result = nonterminalSymbolDerivations.apply(start, first);
 	}
 
@@ -316,7 +310,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation derivation) {
+	public Stack push(final Slot slot, final Stack caller, final int token, final Intermediate<?> derivation) {
 		Frame callee = frames.get(slot);
 		if (callee == null) {
 			callee = new Frame(slot, token);
@@ -351,7 +345,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation derivation) {
+	public void scheduleNow(final Slot slot, final Stack caller, final Intermediate<?> derivation) {
 		if (!deadNow(slot, caller)) {
 			active.add(new SlotProcess(slot, caller, derivation));
 		}

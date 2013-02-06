@@ -6,9 +6,9 @@ package gll.grammar;
 import gll.gss.Stack;
 import gll.parser.State;
 import gll.sppf.DerivationLabel;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
 import gll.sppf.NonterminalSymbolDerivation;
-import gll.sppf.ProductionDerivation;
+import gll.sppf.Unary;
 
 /**
  * @author Tillmann Rendel
@@ -72,9 +72,8 @@ public class SortReturnSlot extends ReturnSlot {
 	 *            the current codepoint to parse
 	 */
 	@Override
-	public void parse(final State state, final Stack frame, final IntermediateDerivation derivation, final int codepoint) {
-
-		final ProductionDerivation wrapped = new ProductionDerivation(production, derivation);
+	public void parse(final State state, final Stack frame, final Intermediate<?> derivation, final int codepoint) {
+		final Unary wrapped = new Unary(production, derivation);
 		final NonterminalSymbolDerivation result = state.createNonterminalSymbolDerivation(production.getSort(),
 				derivation.getFirst(), wrapped);
 		frame.schedule(state, result, codepoint);

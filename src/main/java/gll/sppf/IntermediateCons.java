@@ -11,25 +11,30 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A derivation node in the shared packed parse forest with children. The
- * children are packed nodes.
+ * An intermediate derivation in the shared packed parse forest that represents
+ * a non-empty list of derivations.
  * 
  * @author Tillmann Rendel
  */
-public class SymbolIntermediateDerivation extends IntermediateDerivation {
+public class IntermediateCons extends Intermediate<Slot> {
 	/**
 	 * The children of this node
 	 */
 	private final Set<Binary> children = new HashSet<Binary>();
+	private final Position first;
+	private final Position last;
 
 	/**
-	 * Create branch.
+	 * Create IntermediateDerivation.
 	 * 
+	 * @param label
 	 * @param first
 	 * @param last
 	 */
-	public SymbolIntermediateDerivation(final Slot slot, final Position first, final Position last) {
-		super(slot, first, last);
+	public IntermediateCons(final Slot label, final Position first, final Position last) {
+		super(label);
+		this.first = first;
+		this.last = last;
 	}
 
 	/**
@@ -67,6 +72,22 @@ public class SymbolIntermediateDerivation extends IntermediateDerivation {
 		} else {
 			return Color.blue;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Position getFirst() {
+		return first;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Position getLast() {
+		return last;
 	}
 
 	/**

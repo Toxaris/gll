@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * A derivation of a token in the shared packed parse forest.
+ * A derivation in the shared packed parse forest that represents the derivation
+ * for a token.
  * 
  * @author Tillmann Rendel
  */

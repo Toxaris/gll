@@ -11,18 +11,32 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A packed derivation node in the shared packed parse forest. A packed node is
- * labeled by a grammar slot and points two derivation nodes. Two packed nodes
- * are merged if they are fully equivalent, that is, they are labeled by the
- * same grammar slot and point to the same derivation nodes.
+ * A <i>binary</i> packed derivation node in the shared packed parse forest.
+ * 
+ * <p>
+ * Together with intermediate nodes ({@link Intermediate}), these nodes are used
+ * to encode a linked list of derivation nodes. New elements are added to the
+ * list at the right, so the field {@link #lhs} is a reference to the initial
+ * segment of the list, and the field {@link #rhs} is a reference to the most
+ * recently added element of the list. The list can be extracted by
+ * {@link #getSubderivations(List)}, but this will partially destroy sharing and
+ * can therefore lead to more than O(n³) memory consumption.
+ * </p>
+ * 
+ * <p>
+ * The packed node is labeled by a grammar slot and points to two derivation
+ * nodes. Two binary packed nodes are merged if they are fully equivalent, that
+ * is, they are labeled by the same grammar slot and point to the same
+ * derivation nodes.
+ * </p>
  * 
  * @author Tillmann Rendel
  */
-public class Binary extends SPPFNode<Derivation<?, ?>> {
+public class Binary extends Packed {
 	/**
 	 * The left-hand side.
 	 */
-	private final IntermediateDerivation lhs;
+	private final Intermediate<?> lhs;
 
 	/**
 	 * The position between the left-hand side and the right-hand side.
@@ -52,8 +66,7 @@ public class Binary extends SPPFNode<Derivation<?, ?>> {
 	 * @param rhs
 	 *            the right-hand side
 	 */
-	public Binary(final Slot slot, final Position position, final IntermediateDerivation lhs,
-			final SymbolDerivation<?, ?> rhs) {
+	public Binary(final Slot slot, final Position position, final Intermediate<?> lhs, final SymbolDerivation<?, ?> rhs) {
 		super();
 		this.slot = slot;
 		this.position = position;

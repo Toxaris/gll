@@ -5,9 +5,9 @@ package gll.grammar;
 
 import gll.parser.State;
 import gll.sppf.DerivationLabel;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 
 /**
  * @author Tillmann Rendel
@@ -36,9 +36,9 @@ public abstract class ReturnSlot extends Slot {
 	 * .Derivation, fomegastar.syntax.parser.Derivation)
 	 */
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
+	public IntermediateCons createDerivation(final State state, final Intermediate<?> lhs,
 			final SymbolDerivation<?, ?> rhs) {
-		return state.createBranch(this, lhs, rhs);
+		return state.append(this, lhs, rhs);
 	}
 
 	public abstract DerivationLabel getLabel();

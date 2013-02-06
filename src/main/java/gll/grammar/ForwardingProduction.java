@@ -3,7 +3,7 @@
  */
 package gll.grammar;
 
-import gll.sppf.ProductionDerivation;
+import gll.sppf.Unary;
 import gll.sppf.SymbolDerivation;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ForwardingProduction extends Production {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object extract(final ProductionDerivation derivation) {
+	public Object extract(final Unary derivation) {
 		if (derivation.getChildren().size() != 1) {
 			throw new Error("Ambiguity or parser problem!");
 		}

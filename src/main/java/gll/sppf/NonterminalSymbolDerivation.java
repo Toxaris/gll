@@ -9,13 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Should this be a unary packed node?
+ * A derivation in the shared packed parse forest that represents the derivation
+ * for a sort.
  * 
  * @author Tillmann Rendel
  */
-public class NonterminalSymbolDerivation extends SymbolDerivation<Sort, ProductionDerivation> {
+public class NonterminalSymbolDerivation extends SymbolDerivation<Sort, Unary> {
 
-	private final Set<ProductionDerivation> children = new HashSet<ProductionDerivation>();
+	private final Set<Unary> children = new HashSet<Unary>();
 
 	private final Position first;
 
@@ -34,7 +35,7 @@ public class NonterminalSymbolDerivation extends SymbolDerivation<Sort, Producti
 		this.last = last;
 	}
 
-	public void add(final ProductionDerivation child) {
+	public void add(final Unary child) {
 		children.add(child);
 	}
 
@@ -61,7 +62,7 @@ public class NonterminalSymbolDerivation extends SymbolDerivation<Sort, Producti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<? extends ProductionDerivation> getChildren() {
+	public Set<? extends Unary> getChildren() {
 		return children;
 	}
 

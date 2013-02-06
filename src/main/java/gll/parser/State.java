@@ -8,13 +8,14 @@ import gll.grammar.Sort;
 import gll.gss.Frame;
 import gll.gss.Initial;
 import gll.gss.Stack;
-import gll.sppf.IntermediateDerivation;
+import gll.sppf.Intermediate;
+import gll.sppf.IntermediateCons;
+import gll.sppf.IntermediateEmpty;
 import gll.sppf.NonterminalSymbolDerivation;
 import gll.sppf.Position;
-import gll.sppf.ProductionDerivation;
 import gll.sppf.SymbolDerivation;
-import gll.sppf.SymbolIntermediateDerivation;
 import gll.sppf.TerminalSymbolDerivation;
+import gll.sppf.Unary;
 
 /**
  * An interface to the state of a GLL parser.
@@ -42,8 +43,7 @@ public interface State {
 	 * @return a intermediate derivation that contains a packed node that
 	 *         combines {@code lhs} and {@code rhs}
 	 */
-	SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation lhs,
-			final SymbolDerivation<?, ?> rhs);
+	IntermediateCons append(final Slot slot, final Intermediate<?> lhs, final SymbolDerivation<?, ?> rhs);
 
 	/**
 	 * Create an empty derivation for some grammar slot.
@@ -56,7 +56,7 @@ public interface State {
 	 *            the current grammar slot
 	 * @return empty derivation
 	 */
-	IntermediateDerivation createEmpty(final Slot slot);
+	IntermediateEmpty createEmpty();
 
 	/**
 	 * Create a derivation for a nonterminal symbol.
@@ -70,7 +70,7 @@ public interface State {
 	 * @return a derivation for the sort
 	 */
 	NonterminalSymbolDerivation createNonterminalSymbolDerivation(final Sort sort, final Position first,
-			final ProductionDerivation derivation);
+			final Unary derivation);
 
 	/**
 	 * Create a token derivation for the current token.
@@ -115,7 +115,7 @@ public interface State {
 	 * <p>
 	 * We have to remember the popped results because we want to consider them
 	 * if we later link additional parent frames to the frame. See
-	 * {@link #push(Slot, Stack, int, IntermediateDerivation)}.
+	 * {@link #push(Slot, Stack, int, IntermediateCons)}.
 	 * </p>
 	 * 
 	 * @param frame
@@ -149,7 +149,7 @@ public interface State {
 	 * @param token
 	 * @param derivation
 	 */
-	Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation derivation);
+	Stack push(final Slot slot, final Stack caller, final int token, final Intermediate<?> derivation);
 
 	/**
 	 * Schedule a parsing process to be run after we finish processing the
@@ -179,7 +179,7 @@ public interface State {
 	 * @param derivation
 	 *            the intermediate derivation constructed so far
 	 */
-	void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation derivation);
+	void scheduleNow(final Slot slot, final Stack caller, final Intermediate<?> derivation);
 
 	/**
 	 * Exports the graph-structured stack to a <code>*.dot</code> file (for
