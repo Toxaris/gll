@@ -32,7 +32,7 @@ public abstract class Slot implements DerivationLabel {
 	 * @param result
 	 * @return
 	 */
-	public abstract SymbolIntermediateDerivation createDerivation(State state, IntermediateDerivation<?> derivation,
+	public abstract SymbolIntermediateDerivation createDerivation(State state, IntermediateDerivation derivation,
 			SymbolDerivation<?, ?> result);
 
 	/**
@@ -47,7 +47,7 @@ public abstract class Slot implements DerivationLabel {
 	 * @param codepoint
 	 *            the current codepoint to parse
 	 */
-	public abstract void parse(State state, Stack frame, IntermediateDerivation<?> derivation, int codepoint);
+	public abstract void parse(State state, Stack frame, IntermediateDerivation derivation, int codepoint);
 
 	@Override
 	public String toString() {

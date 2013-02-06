@@ -9,8 +9,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Tillmann Rendel
+ * Should this be a unary packed node?
  * 
+ * @author Tillmann Rendel
  */
 public class NonterminalSymbolDerivation extends SymbolDerivation<Sort, ProductionDerivation> {
 

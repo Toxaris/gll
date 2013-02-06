@@ -179,7 +179,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation<?> lhs,
+	public SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		final Position first = lhs.getFirst();
 		final Position middle = rhs.getFirst();
@@ -195,7 +195,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public IntermediateDerivation<?> createEmpty(final Slot slot) {
+	public IntermediateDerivation createEmpty(final Slot slot) {
 		return emptyIntermediateDerivations.apply(slot);
 	}
 
@@ -316,7 +316,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation<?> derivation) {
+	public Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation derivation) {
 		Frame callee = frames.get(slot);
 		if (callee == null) {
 			callee = new Frame(slot, token);
@@ -351,7 +351,7 @@ public class ParsingState implements State {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation<?> derivation) {
+	public void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation derivation) {
 		if (!deadNow(slot, caller)) {
 			active.add(new SlotProcess(slot, caller, derivation));
 		}

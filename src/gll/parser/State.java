@@ -42,7 +42,7 @@ public interface State {
 	 * @return a intermediate derivation that contains a packed node that
 	 *         combines {@code lhs} and {@code rhs}
 	 */
-	SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation<?> lhs,
+	SymbolIntermediateDerivation createBranch(final Slot slot, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs);
 
 	/**
@@ -56,7 +56,7 @@ public interface State {
 	 *            the current grammar slot
 	 * @return empty derivation
 	 */
-	IntermediateDerivation<?> createEmpty(final Slot slot);
+	IntermediateDerivation createEmpty(final Slot slot);
 
 	/**
 	 * Create a derivation for a nonterminal symbol.
@@ -149,7 +149,7 @@ public interface State {
 	 * @param token
 	 * @param derivation
 	 */
-	Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation<?> derivation);
+	Stack push(final Slot slot, final Stack caller, final int token, final IntermediateDerivation derivation);
 
 	/**
 	 * Schedule a parsing process to be run after we finish processing the
@@ -179,7 +179,7 @@ public interface State {
 	 * @param derivation
 	 *            the intermediate derivation constructed so far
 	 */
-	void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation<?> derivation);
+	void scheduleNow(final Slot slot, final Stack caller, final IntermediateDerivation derivation);
 
 	/**
 	 * Exports the graph-structured stack to a <code>*.dot</code> file (for

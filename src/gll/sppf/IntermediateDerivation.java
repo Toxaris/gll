@@ -11,7 +11,7 @@ import java.util.List;
  * @author Tillmann Rendel
  * 
  */
-public abstract class IntermediateDerivation<Child extends SPPFNode<?>> extends Derivation<Slot, Child> {
+public abstract class IntermediateDerivation extends Derivation<Slot, Binary> {
 	private final Position first;
 	private final Position last;
 

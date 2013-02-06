@@ -35,14 +35,13 @@ public class FinalSlot extends Slot {
 	}
 
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation<?> lhs,
+	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		// TODO avoid having to implement this method
 		return null;
 	}
 
 	@Override
-	public void parse(final State state, final Stack frame, final IntermediateDerivation<?> derivation,
-			final int codepoint) {
+	public void parse(final State state, final Stack frame, final IntermediateDerivation derivation, final int codepoint) {
 	}
 }

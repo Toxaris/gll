@@ -16,7 +16,7 @@ import java.util.Set;
  * 
  * @author Tillmann Rendel
  */
-public class SymbolIntermediateDerivation extends IntermediateDerivation<Binary> {
+public class SymbolIntermediateDerivation extends IntermediateDerivation {
 	/**
 	 * The children of this node
 	 */

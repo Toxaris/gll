@@ -16,7 +16,7 @@ public class SlotProcess extends Process {
 	/**
 	 * Current derivation.
 	 */
-	private final IntermediateDerivation<?> derivation;
+	private final IntermediateDerivation derivation;
 
 	/**
 	 * The grammar slot we have to parse next
@@ -31,7 +31,7 @@ public class SlotProcess extends Process {
 	 * @param stack
 	 *            our stack
 	 */
-	public SlotProcess(final Slot slot, final Stack stack, final IntermediateDerivation<?> derivation) {
+	public SlotProcess(final Slot slot, final Stack stack, final IntermediateDerivation derivation) {
 		super(stack);
 		this.slot = slot;
 		this.derivation = derivation;

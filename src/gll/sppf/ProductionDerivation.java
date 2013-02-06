@@ -13,8 +13,8 @@ import java.util.Set;
 /**
  * @author Tillmann Rendel
  */
-public class ProductionDerivation extends Derivation<Production, IntermediateDerivation<?>> {
-	private final IntermediateDerivation<?> child;
+public class ProductionDerivation extends Derivation<Production, IntermediateDerivation> {
+	private final IntermediateDerivation child;
 
 	/**
 	 * Create ProductionDerivation.
@@ -22,7 +22,7 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 	 * @param label
 	 * @param child
 	 */
-	public ProductionDerivation(final Production label, final IntermediateDerivation<?> child) {
+	public ProductionDerivation(final Production label, final IntermediateDerivation child) {
 		super(label);
 		this.child = child;
 	}
@@ -74,7 +74,7 @@ public class ProductionDerivation extends Derivation<Production, IntermediateDer
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<? extends IntermediateDerivation<?>> getChildren() {
+	public Set<? extends IntermediateDerivation> getChildren() {
 		return Collections.singleton(child);
 	}
 

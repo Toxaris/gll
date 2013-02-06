@@ -94,7 +94,7 @@ public class Frame extends Stack {
 	 * @param derivation
 	 *            the associated derivation
 	 */
-	public Link link(final Stack that, final IntermediateDerivation<?> derivation) {
+	public Link link(final Stack that, final IntermediateDerivation derivation) {
 		final Link result = new Link(that, derivation);
 		stacks.add(result);
 		return result;

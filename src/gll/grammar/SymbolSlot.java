@@ -72,7 +72,7 @@ public class SymbolSlot extends Slot {
 	 * .Derivation, fomegastar.syntax.parser.Derivation)
 	 */
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation<?> lhs,
+	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		return state.createBranch(this, lhs, rhs);
 	}
@@ -95,7 +95,7 @@ public class SymbolSlot extends Slot {
 	 *            the current codepoint to parse
 	 */
 	@Override
-	public void parse(final State state, final Stack caller, final IntermediateDerivation<?> derivation,
+	public void parse(final State state, final Stack caller, final IntermediateDerivation derivation,
 			final int codepoint) {
 		final Stack callee = state.push(next, caller, state.getPosition(), derivation);
 		symbol.call(state, callee, codepoint);

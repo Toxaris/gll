@@ -32,7 +32,7 @@ public class Link extends GSSNode<Stack> {
 	/**
 	 * The associated derivation.
 	 */
-	private final IntermediateDerivation<?> derivation;
+	private final IntermediateDerivation derivation;
 
 	/**
 	 * Create a link.
@@ -42,7 +42,7 @@ public class Link extends GSSNode<Stack> {
 	 * @param derivation
 	 *            the associated deriation
 	 */
-	public Link(final Stack caller, final IntermediateDerivation<?> derivation) {
+	public Link(final Stack caller, final IntermediateDerivation derivation) {
 		this.caller = caller;
 		this.derivation = derivation;
 	}

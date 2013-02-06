@@ -36,7 +36,7 @@ public abstract class ReturnSlot extends Slot {
 	 * .Derivation, fomegastar.syntax.parser.Derivation)
 	 */
 	@Override
-	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation<?> lhs,
+	public SymbolIntermediateDerivation createDerivation(final State state, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		return state.createBranch(this, lhs, rhs);
 	}

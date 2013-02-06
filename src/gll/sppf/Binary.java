@@ -22,7 +22,7 @@ public class Binary extends SPPFNode<Derivation<?, ?>> {
 	/**
 	 * The left-hand side.
 	 */
-	private final IntermediateDerivation<?> lhs;
+	private final IntermediateDerivation lhs;
 
 	/**
 	 * The position between the left-hand side and the right-hand side.
@@ -52,7 +52,7 @@ public class Binary extends SPPFNode<Derivation<?, ?>> {
 	 * @param rhs
 	 *            the right-hand side
 	 */
-	public Binary(final Slot slot, final Position position, final IntermediateDerivation<?> lhs,
+	public Binary(final Slot slot, final Position position, final IntermediateDerivation lhs,
 			final SymbolDerivation<?, ?> rhs) {
 		super();
 		this.slot = slot;

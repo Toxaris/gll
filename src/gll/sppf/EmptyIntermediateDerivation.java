@@ -13,10 +13,11 @@ import java.util.Set;
  * A derivation node in the shared packed parse forest that corresponds to a
  * derivation of the special symbol ε.
  * 
- * @author Tillmann Rendel
+ * Shouldn't this be <code>EmptySymbolDerivation</code>?
  * 
+ * @author Tillmann Rendel
  */
-public class EmptyIntermediateDerivation extends IntermediateDerivation<SPPFNode<?>> {
+public class EmptyIntermediateDerivation extends IntermediateDerivation {
 	/**
 	 * Create an empty derivation.
 	 * 
@@ -30,7 +31,7 @@ public class EmptyIntermediateDerivation extends IntermediateDerivation<SPPFNode
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Set<? extends SPPFNode<?>> getChildren() {
+	public Set<Binary> getChildren() {
 		return Collections.emptySet();
 	}
 

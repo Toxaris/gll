@@ -72,8 +72,7 @@ public class SortReturnSlot extends ReturnSlot {
 	 *            the current codepoint to parse
 	 */
 	@Override
-	public void parse(final State state, final Stack frame, final IntermediateDerivation<?> derivation,
-			final int codepoint) {
+	public void parse(final State state, final Stack frame, final IntermediateDerivation derivation, final int codepoint) {
 
 		final ProductionDerivation wrapped = new ProductionDerivation(production, derivation);
 		final NonterminalSymbolDerivation result = state.createNonterminalSymbolDerivation(production.getSort(),
