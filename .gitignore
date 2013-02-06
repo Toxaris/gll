@@ -1,2 +1,6 @@
 bin
 .settings
+project/target
+target
+*~
+sbt
