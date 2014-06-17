@@ -1,3 +1,5 @@
+EclipseKeys.projectFlavor := EclipseProjectFlavor.Java
+
 libraryDependencies += "com.google.caliper" % "caliper" % "0.5-rc1"
 
 libraryDependencies ++= Seq("com.novocode" % "junit-interface" % "0.10-M2" % "test", "junit" % "junit" % "4.8.2")
